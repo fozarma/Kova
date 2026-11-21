@@ -14,7 +14,7 @@
 
 ## What Kova does
 
-- Offers 12 built-in crosshair styles and imports transparent PNG custom crosshairs.
+- Offers built-in crosshair styles and imports transparent PNG custom crosshairs.
 - Draws an optional click-through desktop crosshair overlay (F1 to toggle).
 - Suggests game-grouped stretched resolutions as well as typed custom sizes.
 - Gives you a 15-second revert window after changing the display mode.
