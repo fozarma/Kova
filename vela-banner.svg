@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-labelledby="title desc">
+<title id="title">Vela</title><desc id="desc">The folded V mark and Vela wordmark against a violet-lit black background.</desc>
+<defs>
+ <radialGradient id="sky" cx="80%" cy="8%" r="97%"><stop stop-color="#302843"/><stop offset=".56" stop-color="#11121c"/><stop offset="1" stop-color="#090b10"/></radialGradient>
+ <linearGradient id="rim" x2="1" y2="0" gradientUnits="objectBoundingBox"><stop stop-color="#8f80b5" stop-opacity="0"/><stop offset=".58" stop-color="#bb9bfa"/><stop offset=".83" stop-color="#6d80af"/><stop offset="1" stop-color="#627eaa" stop-opacity=".08"/></linearGradient>
+ <linearGradient id="metal" x2=".7" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#bda7e6"/></linearGradient>
+ <clipPath id="clip"><rect width="1200" height="300" rx="24"/></clipPath>
+</defs>
+<g clip-path="url(#clip)"><rect width="1200" height="300" fill="url(#sky)"/>
+<g fill="none" stroke="url(#rim)"><path d="M500 359 C790 318 816 69 1240 30" stroke-width="18" opacity=".045"/><path d="M500 359 C790 318 816 69 1240 30" stroke-width="1.6"/><path d="M530 360 C800 330 860 84 1230 57" opacity=".33"/><path d="M654 359 C870 302 952 124 1240 100" opacity=".17"/></g>
+<g transform="translate(74 90) scale(1.2)"><path fill="url(#metal)" d="M0 0H13L46 65L39 81Z"/><path fill="#f1ebfc" d="M62 0H76L44 81L38 68Z"/></g>
+<text x="209" y="169" font-family="Segoe UI,Arial,sans-serif" font-weight="300" font-size="82" letter-spacing="14" fill="#f7f5ff">VELA</text>
+<text x="214" y="210" font-family="Segoe UI,Arial,sans-serif" font-size="21" fill="#c7bfd5">Gaming utility for Windows</text></g>
+</svg>
