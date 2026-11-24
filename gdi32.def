@@ -1,0 +1,25 @@
+LIBRARY gdi32.dll
+EXPORTS
+ BitBlt
+ CreateCompatibleDC
+ CreateDIBSection
+ CreateFontW
+ CreateRoundRectRgn
+ CreateSolidBrush
+ DeleteDC
+ DeleteObject
+ GetDeviceGammaRamp
+ SelectObject
+ SetBkColor
+ SetBkMode
+ SetDeviceGammaRamp
+ SetTextColor
+ GetTextFaceW
+ CreateCompatibleBitmap
+ SaveDC
+ RestoreDC
+ ExcludeClipRect
+ D3DKMTOpenAdapterFromGdiDisplayName
+ D3DKMTCloseAdapter
+ D3DKMTQueryStatistics
+ D3DKMTQueryAdapterInfo

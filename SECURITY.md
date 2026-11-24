@@ -10,4 +10,4 @@ Download published releases from the official repository. Do not assume source v
 
 ## Sensitive features
 
-Kova changes Windows display modes and, when enabled, per-display colour settings. It also creates a click-through overlay. These features should be manually tested on supported hardware before using a release, especially in competitive games.
+Vela changes Windows display modes and, when enabled, per-display colour settings. It also creates a click-through overlay. These features should be manually tested on supported hardware before using a release, especially in competitive games.

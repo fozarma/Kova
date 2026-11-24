@@ -27,14 +27,14 @@ Choose a competitive preset or enter a custom width and height. Vela previews th
 
 ## Get the app
 
-The screenshots show **Vela**. Earlier releases and source files in this repository use the **Kova** name. Check the asset name on the release you download. [GitHub releases](https://github.com/fozarma/Kova/releases)
+Download [Vela.exe for Windows x64](https://github.com/fozarma/Vela/releases/latest/download/Vela.exe) and run it. [Release notes](https://github.com/fozarma/Vela/releases/latest)
 
 ## Build on Windows
 
-For the Kova source currently in this repository, install Visual Studio C++ Build Tools, the Windows SDK, LLVM, and Python with Pillow. Run the build script from an x64 developer command prompt.
+Install the x64 Visual Studio C++ Build Tools, the Windows SDK, and Python 3. Run the following from the repository root.
 
 ```bat
-build-windows.cmd
+build-msvc.cmd
 ```
 
 Borderless window mode is useful for overlays. Exclusive fullscreen, HDR, and driver settings can affect how display adjustments appear.

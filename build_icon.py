@@ -1,43 +1,38 @@
-from PIL import Image, ImageDraw
-from io import BytesIO
-from pathlib import Path
+"""Generate Vela's folded V at every Windows shell icon size."""
 import struct
+import zlib
+from pathlib import Path
 root=Path(__file__).parent
+def png(size):
+    def inside(x,y,points):
+        return all((b[0]-a[0])*(y-a[1])-(b[1]-a[1])*(x-a[0])>=0 for a,b in zip(points,points[1:]+points[:1]))
+    shapes=[([(17,24),(31,24),(53,68),(44,82)],(243,246,251)),
+            ([(72,21),(86,21),(56,82),(50,68)],(231,239,249))]
+    raw=bytearray()
+    for j in range(size):
+        raw.append(0)
+        for i in range(size):
+            values=[0]*4
+            for v in (.25,.75):
+                for u in (.25,.75):
+                    x,y=100*(i+u)/size,100*(j+v)/size
+                    edge=max(23-x,0,x-77)**2+max(23-y,0,y-77)**2
+                    if edge>18**2:continue
+                    glow=1/(1+((x-82)/46)**2+((y-18)/57)**2)**2
+                    ground=tuple(round(v+d*glow) for v,d in [(8,8),(11,14),(15,25)])
+                    if edge>17**2:ground=(67,78,92)
+                    col=next((c for verts,c in shapes if inside(x,y,verts)),ground)
+                    for k in range(3):values[k]+=col[k]
+                    values[3]+=1
+            raw.extend([round(c/max(values[3],1)) for c in values[:3]]+[round(255*values[3]/4)])
+    def chunk(t,d):return struct.pack('>I',len(d))+t+d+struct.pack('>I',zlib.crc32(t+d))
+    return b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',size,size,8,6,0,0,0))+chunk(b'IDAT',zlib.compress(raw))+chunk(b'IEND',b'')
 sizes=[16,24,32,48,64,128,256]
-
-def generate(size):
- scale=size*4
- im=Image.new('RGBA',(scale,scale),(0,0,0,0))
- d=ImageDraw.Draw(im)
- k=scale/256
- def pts(p):return [(round(x*k),round(y*k)) for x,y in p]
- def rect(xy,radius=0,fill=None,outline=None,width=1):d.rounded_rectangle([round(v*k) for v in xy],radius=round(radius*k),fill=fill,outline=outline,width=max(1,round(width*k)))
- rect((8,8,248,248),50,(18,20,23,255),(76,81,88,255),3)
- white=(242,244,246,255)
- # Clean, monogrammatic K in three shapes (not the old H symbol).
- d.polygon(pts([(69,58),(102,58),(102,198),(69,198)]),fill=white)
- d.polygon(pts([(111,125),(176,58),(219,58),(154,128),(219,198),(177,198)]),fill=white)
- d.polygon(pts([(117,123),(142,103),(177,198),(145,198)]),fill=white)
- d.ellipse([round(v*k) for v in (201,36,222,57)],fill=(47,211,125,255))
- im=im.resize((size,size),Image.Resampling.LANCZOS)
- raw=BytesIO();im.save(raw,format='PNG',optimize=True)
- return raw.getvalue(),im
-
-results=[generate(s) for s in sizes]
-header=struct.pack('<HHH',0,1,len(results));index=b'';data=b'';offset=6+16*len(results)
-for size,(raw,_) in zip(sizes,results):
- index+=struct.pack('<BBBBHHII',size if size<256 else 0,size if size<256 else 0,0,0,1,32,len(raw),offset)
- data+=raw;offset+=len(raw)
-(root/'Kova.ico').write_bytes(header+index+data)
-results[-1][1].save(root/'Kova_icon.png')
-def resource(type_id,name_id,payload):
- hdr=struct.pack('<IIHHHHIHHII',len(payload),32,0xffff,type_id,0xffff,name_id,0,0x1030,0,0,0)
- return hdr+payload+b'\0'*((-len(payload))%4)
-res=resource(0,0,b'')
-for i,(raw,_) in enumerate(results):res+=resource(3,101+i,raw)
-grp=struct.pack('<HHH',0,1,len(results))
-for i,(size,(raw,_)) in enumerate(zip(sizes,results)):
- grp+=struct.pack('<BBBBHHIH',size if size<256 else 0,size if size<256 else 0,0,0,1,32,len(raw),101+i)
-res+=resource(14,1,grp)
-(root/'Kova.res').write_bytes(res)
-print('generated',len(res),'bytes resource')
+icons=[png(s) for s in sizes]
+offset=6+16*len(icons)
+entries=bytearray()
+for size,data in zip(sizes,icons):
+    entries.extend(struct.pack('<BBBBHHII',size%256,size%256,0,0,1,32,len(data),offset))
+    offset+=len(data)
+(root/'Vela.ico').write_bytes(struct.pack('<HHH',0,1,len(icons))+entries+b''.join(icons))
+(root/'Vela_icon.png').write_bytes(icons[-1])

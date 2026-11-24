@@ -1,0 +1,6 @@
+LIBRARY magnification.dll
+EXPORTS
+ MagGetFullscreenColorEffect
+ MagInitialize
+ MagSetFullscreenColorEffect
+ MagUninitialize
